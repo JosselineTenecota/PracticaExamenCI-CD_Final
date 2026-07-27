@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventario-deployment
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: inventario-app
+  template:
+    metadata:
+      labels:
+        app: inventario-app
+    spec:
+      containers:
+      - name: inventario-app
+        image: ghcr.io/ericksalinas30/inventario-app:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        # Inyección de secreto sin texto plano en versión
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: inventario-secrets
+              key: API_KEY
+        # Simulación de arranque lento (15 segundos)
+        - name: STARTUP_DELAY_SECONDS
+          value: "15"
+        - name: APP_VERSION
+          value: "v1.0.0"
+        - name: APP_COLOR
+          value: "blue"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 6 # Tolera hasta 30s sin matar el Pod durante la inicialización
