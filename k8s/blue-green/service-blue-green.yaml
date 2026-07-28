@@ -6,7 +6,7 @@ spec:
   type: NodePort
   selector:
     app: inventario-app
-    version: blue   # <--- AQUÍ CAMBIAS A "green" PARA HACER EL CORTE DE TRÁFICO 
+    version: green   # <--- AQUÍ CAMBIAS A "green" PARA HACER EL CORTE DE TRÁFICO 
   ports:
   - port: 3000
     targetPort: 3000
