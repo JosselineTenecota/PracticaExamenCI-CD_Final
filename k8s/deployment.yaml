@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: inventario-app
-        image: ghcr.io/ericksalinas30/inventario-app:latest
+        image: ghcr.io/josselinetenecota/practicaexamenci-cd_final:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
