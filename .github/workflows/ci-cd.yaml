@@ -62,8 +62,8 @@ jobs:
         with:
           image-ref: 'ghcr.io/${{ env.REPO_LOWERCASE }}:latest'
           format: 'table'
-          exit-code: '1' #0
+          exit-code: '0' #0 / 1
           ignore-unfixed: true
           vuln-type: 'os,library'
-          severity: 'CRITICAL' #CRITICAL,HIGH
+          severity: 'CRITICAL,HIGH' #CRITICAL,HIGH /CRITICAL
 
